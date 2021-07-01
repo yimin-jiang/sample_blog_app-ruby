@@ -1,7 +1,11 @@
 class ArticlesController < ApplicationController
 
+	#除了 index 和 show 动作，其他动作都要通过身份验证才能访问
+	http_basic_authenticate_with name: "jim", password: "jim", except: [:index, :show]
+
 	#在 ArticlesController 中添加 @article = Article.new 是因为如果不这样做，在视图中 @article 的值就会是 nil，这样在调用 @article.errors.any? 时就会抛出错误。
 
+	
 	def index
 		@articles = Article.all
 	end
@@ -19,7 +23,7 @@ class ArticlesController < ApplicationController
 	end
 
 	def create
-		@article = Article.new(article_params)
+		@article = Article.new(article_params) #article_params就是create 的 view 中所采集的数据
 
 		if @article.save #若save成功
 			redirect_to @article #最后把页面重定向到 show Action,重新定向到当前这个@article实例
