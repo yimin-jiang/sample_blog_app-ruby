@@ -9,7 +9,14 @@
 	<%= comment.body %>
 </p>
 
+<%# debugger %>
+<p style="background: pink">
+comment:
+<%= comment.inspect %>
+</p>
 <p>
+
+
 <%= link_to 'Destroy Comment', [comment.article, comment],
 			method: :delete,
 			data: { confirm: 'Are you sure?' } %>

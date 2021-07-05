@@ -3,13 +3,18 @@ class CommentsController < ApplicationController
 	http_basic_authenticate_with name: "jim", password: "jim", only: :destroy
 
 	def create
-		@article = Article.find(params[:article_id])
-		@comment = @article.comments.create(comment_params) #comment_params就是comment的view 中所采集的数据. 利用了关联特有的方法，在 @article.comments 上调用 create 方法来创建和保存评论，同时自动把评论和对应的文章关联起来。
-		redirect_to article_path(@article)
+		@article = Article.find(params[:article_id])#为什么是:aritcle_id?因为对应的url是这样的。/articles/:article_id/comments
+		# @article has_many @comment
+		@comment = @article.comments.create(comment_params) #comment_params就是comment的view 中所采集的数据. 
+		#利用了关联特有的方法，在 @article.comments 上调用 create 方法来创建和保存评论，同时自动把评论和对应的文章关联起来。
+		redirect_to article_path(@article) #可以写成：redirect_to @article
 	end
 	
 	def destroy
-		#destroy 动作首先找到指定文章，然后在 @article.comments 集合中找到指定评论，接着从数据库删除这条评论，最后重定向到显示文章的页面。
+		#destroy 动作首先找到指定文章，
+		#然后在 @article.comments 集合中找到指定评论，
+		#接着从数据库删除这条评论，
+		#最后重定向到显示文章的页面。
 		@article = Article.find(params[:article_id])
 		@comment = @article.comments.find(params[:id])
 		@comment.destroy

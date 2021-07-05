@@ -1,4 +1,5 @@
 <%# article content %>
+<%# @article对应的是数据库中的行，每个属性对应数据库的字段 %>
 <p>
 	<strong>Title:</strong>
 	<%= @article.title %>
@@ -11,12 +12,28 @@
 
 <%# comments content %>
 <h2>Comments</h2>
-<%# 这样对于 @article.comments 集合中的每条评论，都会渲染 app/views/comments/_comment.html.erb 文件中的局部视图。render 方法会遍历 @article.comments 集合，把每条评论赋值给局部视图中的同名局部变量，也就是这里的 comment 变量。 %>
-<%= render @article.comments %>
+<%# 这样对于 @article.comments 集合中的每条评论，都会渲染 app/views/comments/_comment.html.erb 文件中的局部视图。%>
+<%# render 方法会遍历 @article.comments 集合，把每条评论赋值给局部视图中的同名局部变量，也就是这里的 comment 变量。 %>
+<%= render @article.comments %>  <%# article下对应的comments%>
 
 <%# add comments %>
 <h2>Add a comment:</h2>
 <%= render 'comments/form' %>
 
+<%# 注意，在路由辅助方法中不需要指定 ID。*************** %>
+<%# edit_article_path(@article)的意思是 /articles/@article.id/edit %>
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>
+
+
+
+<div style="background: pink">
+	<p>
+	article: 
+	<%= @article.inspect %>
+	</p>
+	<p>
+	params:
+	<%= params.inspect %>
+	</p>
+</div>
